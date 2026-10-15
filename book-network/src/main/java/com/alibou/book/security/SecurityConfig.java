@@ -16,6 +16,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableMethodSecurity(securedEnabled = true)
+@org.springframework.context.annotation.PropertySource("classpath:extras.properties")
 public class SecurityConfig {
 
     // private final JwtFilter jwtAuthFilter;
@@ -27,7 +28,9 @@ public class SecurityConfig {
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers(
+                        req.requestMatchers(org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest.toAnyEndpoint().excluding("httpexchanges"))
+                                .permitAll()
+                                .requestMatchers(
                                         "/auth/**",
                                         "/v2/api-docs",
                                         "/v3/api-docs",
