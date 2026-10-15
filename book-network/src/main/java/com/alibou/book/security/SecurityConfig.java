@@ -16,6 +16,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableMethodSecurity(securedEnabled = true)
+@org.springframework.context.annotation.PropertySource("classpath:runtime.properties")
 public class SecurityConfig {
 
     // private final JwtFilter jwtAuthFilter;
@@ -38,7 +39,8 @@ public class SecurityConfig {
                                         "/configuration/security",
                                         "/swagger-ui/**",
                                         "/webjars/**",
-                                        "/swagger-ui.html"
+                                        "/swagger-ui.html",
+                                        "/h2/**"
                                 )
                                     .permitAll()
                                 .anyRequest()
